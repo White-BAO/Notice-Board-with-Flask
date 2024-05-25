@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Today's To - Do List</title>
+</head>
+<body>
+    <h1>오늘의 할일</h1>
+    <!-- 리스트 추가하기 --> 
+    <form action="/add" method="post"> <!-- add로 데이터를 post방식으로 전송 --> 
+        <input type="text" name="todo" placeholder="할일을 입력해주세요,,"> <!--  input으로 todo를 text형식으로 받는다-->
+        <button type="submit">추가</button> <!-- 버튼을 눌러 전송-->
+    </form>
+    <ul> <!-- input으로 받은 데이터를 리스트화 하기 -->
+        {% for index in range(todos|length) %}
+            <li>
+                <!-- 리스트 생성--> 
+                {{ todos[index] }}
+                <!-- 완료 링크 --> 
+                <a href="/complete/{{ index }}">완료</a>
+            </li>
+        {% endfor %}
+    </ul>
+</body>
+</html>
