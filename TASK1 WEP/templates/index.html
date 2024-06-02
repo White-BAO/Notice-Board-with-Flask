@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>학습 게시판</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='index.css') }}">
+</head>
+<body>
+    <div>
+        <h1 class="center">STUDY BOARD</h1>  
+    </div>
+    
+    <div class="container">
+        <h2>게시물 검색</h2>
+        <form action="{{ url_for('search') }}" method="post">
+            <input type="text" name="keyword" placeholder="검색어를 입력하세요">
+            <select name="search_option">
+                <option value="title">제목에서 검색</option>
+                <option value="content">내용에서 검색</option>
+                <option value="both">제목 및 내용에서 검색</option>
+            </select>
+            <button type="submit">검색</button>
+        </form>
+    </div>
+
+    <!-- 게시물 목록 -->
+    <div class="container">
+        <h2>BOARD LIST</h2>
+        <ul>
+            {% for post in posts %}
+                <li class="post-item">
+                    <a href="/post/{{ post.id }}">{{ post.title }}</a> <!-- 게시물 제목 링크 -->
+                </li>
+            {% endfor %}
+        </ul>
+    </div>
+
+    <!-- 게시물 CREATE 버튼 -->
+    <button id="create-post-btn" onclick="openModal()" class="create-post-btn">CREATE</button>
+
+    <!-- 모달 창 -->
+    <div id="create-post-modal" class="modal">
+        <div class="modal-content">
+            <span class="close" onclick="closeModal()">&times;</span>
+            <h2>CREATE</h2>
+            <form action="/submit" method="post">
+                <label for="title">TITLE:</label><br>
+                <input type="text" id="title" name="title" required><br><br>
+                <label for="content">CONTENT:</label><br>
+                <textarea id="content" name="content" rows="4" cols="50" required></textarea><br>
+                <input type="submit" value="CREATE">
+            </form>
+        </div>
+    </div>
+
+    <!-- JavaScript -->
+    <script>
+        // 모달 열기 함수
+        function openModal() {
+            document.getElementById('create-post-modal').style.display = 'block';
+        }
+
+        // 모달 닫기 함수
+        function closeModal() {
+            document.getElementById('create-post-modal').style.display = 'none';
+        }
+    </script>
+</body>
+</html>

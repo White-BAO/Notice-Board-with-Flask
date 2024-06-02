@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{ post.title }}</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='post.css') }}">
+</head>
+<body>
+    <h1>TITLE : {{ post.title }}</h1>
+    <p>CONTENT : {{ post.content }}</p>
+
+    <!-- 게시물 DELETE 폼 -->
+    <form action="/delete/{{ post.id }}" method="post">
+        <input type="hidden" name="_method" value="DELETE"> 
+        <input type="submit" value="DELETE" class="delete-btn"> <!-- DELETE 버튼 -->
+    </form>
+
+    <!-- 게시물 UPDATE 버튼 -->
+    <BR><button id="edit-btn" class="edit-btn">UPDATE</button>
+
+<!-- 모달 창 -->
+<div id="edit-modal" class="modal">
+    <div class="modal-content">
+        <span class="close">&times;</span>
+        <h2>게시물 UPDATE</h2>
+        <form action="/update/{{ post.id }}" method="post">
+            <label for="title">새 제목:</label><br>
+            <input type="text" id="title" name="title" value="{{ post.title }}" required><br>
+            <label for="content">새 내용:</label><br>
+            <textarea id="content" name="content" rows="4" cols="50" required>{{ post.content }}</textarea><br>
+            <input type="submit" value="UPDATE" class="update-btn"> 
+        </form>
+    </div>
+</div>
+    <!-- JavaScript -->
+    <script>
+        // 게시물 UPDATE 버튼 요소 가져오기
+        var editBtn = document.getElementById("edit-btn");
+
+        // 모달 창 요소 가져오기
+        var editModal = document.getElementById("edit-modal");
+
+        // 게시물 UPDATE 버튼을 클릭하여 모달 창 열기
+        editBtn.onclick = function() {
+            editModal.style.display = "block";
+        }
+
+        // 모달 창 닫기 위한 함수
+        var closeBtn = document.getElementsByClassName("close")[0];
+        closeBtn.onclick = function() {
+            editModal.style.display = "none";
+        }
+
+        // 모달 창 외부를 클릭하여도 닫히도록 설정
+        window.onclick = function(event) {
+            if (event.target == editModal) {
+                editModal.style.display = "none";
+            }
+        }
+    </script>
+</body>
+</html>
