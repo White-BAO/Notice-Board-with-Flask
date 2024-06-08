@@ -1,0 +1,89 @@
+
+.modal {
+    display: none; 
+    position: fixed;
+    z-index: 1;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    overflow: auto;
+    background-color: rgba(0, 0, 0, 0.4); 
+}
+
+.modal-content {
+    background-color: #fefefe; 
+    margin: 15% auto;
+    padding: 20px;
+    border: 1px solid #888;
+    width: 80%;
+}
+
+.close {
+    color: #aaaaaa;
+    float: right;
+    font-size: 28px;
+    font-weight: bold;
+}
+
+.close:hover,
+.close:focus {
+    color: #000;
+    text-decoration: none;
+    cursor: pointer;
+}
+
+.delete-btn {
+    background-color: #ff6f61; 
+    color: #fff; 
+    border: none; 
+    padding: 10px 20px; 
+    border-radius: 5px; 
+    cursor: pointer; 
+}
+
+.delete-btn:hover {
+    background-color: #d8553e; 
+}
+
+
+.edit-btn {
+    background-color: #ff6f61; 
+    color: white; 
+    border: none; 
+    padding: 10px 20px; 
+    border-radius: 5px; 
+    cursor: pointer; 
+}
+
+.edit-btn:hover {
+    background-color: #d8553e; 
+}
+
+body {
+    background: linear-gradient(to bottom, pink, white);
+    height: 100vh;
+}
+
+
+.modal-content .update-btn {
+    background-color: #ff6f61; 
+    color: #fff; 
+    border: none; 
+    padding: 10px 20px; 
+    border-radius: 5px; 
+    cursor: pointer; 
+}
+
+
+.modal-content .update-btn:hover {
+    background-color: #d8553e; 
+}
+
+a {
+    color: #ff6f61; /* 링크의 기본 색상 */
+}
+
+a:hover {
+    color: black; /* 링크에 마우스를 올렸을 때의 색상 */
+}
