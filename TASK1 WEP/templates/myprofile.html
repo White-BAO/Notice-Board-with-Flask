@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>프로필</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='myprofile.css') }}">
+</head>
+<body>
+    <h1>{{ user['NAME'] }}의 프로필</h1>
+    <div class="profile-info">
+        {% if profile_pic_path %}
+        <img src="{{ profile_pic_path }}" alt="프로필 사진">
+        {% else %}
+        <p>프로필 사진이 없습니다.</p>
+        {% endif %}
+        <p><strong>이름 :</strong> {{ user['NAME'] }}</p>
+        <p><strong>학교 :</strong> {{ user['SCHOOL'] }}</p>
+        <p><strong>사용자 ID :</strong> {{ user['USER_ID'] }}</p>
+        {% if session.get('USER_ID') == user['USER_ID'] %}
+        <button class="update-btn" onclick="openModal()">수정</button>
+        <form action="/logout" method="GET">
+            <button type="submit" class="logout-btn">로그아웃</button>
+        </form>
+        {% endif %}
+    </div>
+    
+    <div id="myModal" class="modal">
+        <div class="modal-content">
+            <span class="close" onclick="closeModal()">&times;</span>
+            <form action="/update_user" method="POST" enctype="multipart/form-data">
+                <input type="hidden" name="USER_ID" value="{{ user['USER_ID'] }}">
+                <label for="NAME">이름:</label>
+                <input type="text" id="NAME" name="NAME" value="{{ user['NAME'] }}">
+                <label for="SCHOOL">학교:</label>
+                <input type="text" id="SCHOOL" name="SCHOOL" value="{{ user['SCHOOL'] }}">
+                <label for="profile_pic">프로필 사진:</label>
+                <input type="file" id="profile_pic" name="profile_pic">
+                <button type="submit" class="update-btn">저장</button>
+            </form>
+        </div>
+    </div>
+    <script>
+        // 모달 열기
+        function openModal() {
+            document.getElementById("myModal").style.display = "block";
+        }
+
+        // 모달 닫기
+        function closeModal() {
+            document.getElementById("myModal").style.display = "none";
+        }
+    </script>
+</body>
+</html>

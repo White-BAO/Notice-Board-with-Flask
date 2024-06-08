@@ -11,9 +11,11 @@
         <h1 class="center">STUDY BOARD</h1>  
     </div>
     
+    <a href="/forgot_password" class="forgot-password-btn">FIND MY ID & PW</a>
+
     <div class="container">
         <h2>게시물 검색</h2>
-        <form action="{{ url_for('search') }}" method="post">
+        <form action="/search" method="post">
             <input type="text" name="keyword" placeholder="검색어를 입력하세요">
             <select name="search_option">
                 <option value="title">제목에서 검색</option>
@@ -37,34 +39,160 @@
     </div>
 
     <!-- 게시물 CREATE 버튼 -->
-    <button id="create-post-btn" onclick="openModal()" class="create-post-btn">CREATE</button>
+    <button id="create-post-btn" onclick="openCreateModal()" class="create-post-btn">CREATE</button>
 
-    <!-- 모달 창 -->
+<!-- 모달 창 (게시물 생성) -->
     <div id="create-post-modal" class="modal">
         <div class="modal-content">
-            <span class="close" onclick="closeModal()">&times;</span>
+            <span class="close" onclick="closeCreateModal()">&times;</span>
             <h2>CREATE</h2>
-            <form action="/submit" method="post">
+            <form action="/post" method="post">
                 <label for="title">TITLE:</label><br>
                 <input type="text" id="title" name="title" required><br><br>
                 <label for="content">CONTENT:</label><br>
                 <textarea id="content" name="content" rows="4" cols="50" required></textarea><br>
+                <!-- 비밀글 여부를 선택하는 체크박스 -->
+                <input type="checkbox" id="is_secret" name="is_secret" onchange="togglePasswordInput()">
+                <label for="is_secret">Make it a secret?</label><br>
+                <!-- 비밀번호를 입력하는 필드 -->
+                <div id="password_field" style="display:none;">
+                    <label for="password">Enter Password:</label><br>
+                    <input type="password" id="password" name="password">
+                </div>
                 <input type="submit" value="CREATE">
             </form>
         </div>
     </div>
 
+
+
+    <!-- 로그인 버튼 -->
+    <button id="login-btn" onclick="openLoginModal()" class="login-btn">LOGIN</button>
+
+    <!-- 로그인 모달 -->
+    <div id="login-modal" class="modal">
+        <div class="modal-content">
+            <span class="close" onclick="closeLoginModal()">&times;</span>
+            <h2>LOGIN</h2>
+            <!-- 오류 메시지를 출력할 영역 -->
+            <div id="error-message" style="color: red;"></div> 
+            <form action="/login" method="POST" id="login-form"> <!-- 폼에 ID 추가 -->
+                <label for="USER_NAME">Username:</label><br>
+                <input type="text" id="USER_NAME" name="USER_NAME" required><br><br>
+                <label for="PW">Password:</label><br>
+                <input type="password" id="PW" name="PW" required><br><br>
+                <input type="submit" value="LOGIN">
+            </form>
+        </div>
+    </div>
+
+    <!-- 회원가입 버튼 -->
+    <button id="register-btn" onclick="openRegisterModal()" class="register-btn">REGISTER</button>
+
+    <!-- 회원가입 모달 -->
+    <div id="register-modal" class="modal">
+        <div class="modal-content">
+            <span class="close" onclick="closeRegisterModal()">&times;</span>
+            <h2>REGISTER</h2>
+            <!-- 오류 메시지를 출력할 영역 -->
+            <div id="register-error-message" style="color: red;"></div> 
+            <form action="/register" method="post">
+
+                <label for="USER_NAME">ID:</label>
+                <input type="text" id="USER_NAME" name="USER_NAME" required><br><br>
+                
+                <label for="PW">PW:</label>
+                <input type="password" id="PW" name="PW" required><br><br>
+                
+                <label for="NAME">NAME:</label>
+                <input type="text" id="NAME" name="NAME" required><br><br>
+                
+                <label for="SCHOOL">SCHOOL:</label>
+                <input type="text" id="SCHOOL" name="SCHOOL" required><br><br>
+                
+                <button type="submit" class="register-submit">가입하기</button>
+            </form>
+        </div>
+    </div>
+
+    <!-- 사용자 프로필 조회 버튼 -->
+    <button id="search-user-btn" onclick="openSearchUserModal()" class="search-user-btn">사용자 프로필 조회</button>
+
+    <!-- 사용자 프로필 조회 모달 -->
+    <div id="search-user-modal" class="modal">
+        <div class="modal-content">
+            <span class="close" onclick="closeSearchUserModal()">&times;</span>
+            <h2>Search User Profile</h2>
+            <form id="search-user-form">
+                <div class="form-group">
+                    <label for="user-id-input">Enter User ID:</label>
+                    <input type="number" class="form-control" id="user-id-input" required>
+                </div>
+                <button type="submit" class="btn btn-primary">Search</button>
+            </form>
+        </div>
+    </div>
     <!-- JavaScript -->
     <script>
-        // 모달 열기 함수
-        function openModal() {
+            // 비밀번호 입력 필드를 토글하는 함수
+    // 비밀번호 입력 필드를 토글하는 함수
+        function togglePasswordInput() {
+            var passwordField = document.getElementById('password_field');
+            if (document.getElementById('is_secret').checked) {
+                passwordField.style.display = 'block';
+            } else {
+                passwordField.style.display = 'none';
+            }
+        }
+
+        // 모달 열기 함수 (게시물 생성)
+        function openCreateModal() {
             document.getElementById('create-post-modal').style.display = 'block';
         }
 
-        // 모달 닫기 함수
-        function closeModal() {
+        // 모달 닫기 함수 (게시물 생성)
+        function closeCreateModal() {
             document.getElementById('create-post-modal').style.display = 'none';
         }
+
+        // 모달 열기 함수 (로그인)
+        function openLoginModal() {
+            document.getElementById('login-modal').style.display = 'block';
+        }
+
+        // 모달 닫기 함수 (로그인)
+        function closeLoginModal() {
+            document.getElementById('login-modal').style.display = 'none';
+        }
+
+        // 모달 열기 함수 (회원가입)
+        function openRegisterModal() {
+            document.getElementById('register-modal').style.display = 'block';
+        }
+
+        // 모달 닫기 함수 (회원가입)
+        function closeRegisterModal() {
+            document.getElementById('register-modal').style.display = 'none';
+        }
+
+        // 모달 열기 함수 (사용자 프로필 조회) 
+        function openSearchUserModal() {
+            document.getElementById('search-user-modal').style.display = 'block';
+        }
+
+        // 모달 닫기 함수 (사용자 프로필 조회) 
+        function closeSearchUserModal() {
+            document.getElementById('search-user-modal').style.display = 'none';
+        }
+
+        // 사용자 프로필 조회 폼 제출 시
+        document.getElementById('search-user-form').addEventListener('submit', function(event) {
+            event.preventDefault(); // 폼 제출 이벤트 기본 동작 막기
+            var userId = document.getElementById('user-id-input').value; // 입력된 사용자 ID 가져오기
+
+            // 입력된 숫자를 기반으로 사용자 프로필 페이지로 리다이렉트
+            window.location.href = '/view_profile/' + userId;
+        });
     </script>
 </body>
 </html>

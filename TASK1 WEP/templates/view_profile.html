@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <title>{{ user.NAME }}'의 프로필</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='view_profile.css') }}">
+</head>
+<body>
+    <h1>{{ user.NAME }}의 프로필</h1>
+    <p>Name: {{ user.NAME }}</p>
+    <p>School: {{ user.SCHOOL }}</p>
+    {% if profile_pic_path %}
+    <p><img src="{{ profile_pic_path }}" alt="{{ user.NAME }}'의 프로필 Picture"></p>
+    {% endif %}
+    <p><a href="{{ url_for('index') }}">돌아가기</a></p>
+</body>
+</html>

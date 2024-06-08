@@ -79,3 +79,11 @@ body {
 .modal-content .update-btn:hover {
     background-color: #d8553e; 
 }
+
+a {
+    color: #ff6f61; /* 링크의 기본 색상 */
+}
+
+a:hover {
+    color: black; /* 링크에 마우스를 올렸을 때의 색상 */
+}

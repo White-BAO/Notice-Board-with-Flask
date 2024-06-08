@@ -10,6 +10,24 @@
     <h1>TITLE : {{ post.title }}</h1>
     <p>CONTENT : {{ post.content }}</p>
 
+    <!-- 파일 업로드 폼 -->
+    <form method='POST' enctype='multipart/form-data'>
+        {{ form.hidden_tag() }}
+        <label for="file">Upload File:</label>
+        {{ form.file() }}
+        {{ form.submit() }}
+    </form>
+
+    <!-- 업로드된 파일 목록 -->
+    {% if uploaded_files %}
+        <h2>Uploaded Files</h2>
+        <ul>
+            {% for file in uploaded_files %}
+                <li><a href="{{ url_for('download_file', files=file) }}">{{ file }}</a></li>
+            {% endfor %}
+        </ul>
+    {% endif %}
+
     <!-- 게시물 DELETE 폼 -->
     <form action="/delete/{{ post.id }}" method="post">
         <input type="hidden" name="_method" value="DELETE"> 
@@ -17,22 +35,22 @@
     </form>
 
     <!-- 게시물 UPDATE 버튼 -->
-    <BR><button id="edit-btn" class="edit-btn">UPDATE</button>
+    <button id="edit-btn" class="edit-btn">UPDATE</button>
 
-<!-- 모달 창 -->
-<div id="edit-modal" class="modal">
-    <div class="modal-content">
-        <span class="close">&times;</span>
-        <h2>게시물 UPDATE</h2>
-        <form action="/update/{{ post.id }}" method="post">
-            <label for="title">새 제목:</label><br>
-            <input type="text" id="title" name="title" value="{{ post.title }}" required><br>
-            <label for="content">새 내용:</label><br>
-            <textarea id="content" name="content" rows="4" cols="50" required>{{ post.content }}</textarea><br>
-            <input type="submit" value="UPDATE" class="update-btn"> 
-        </form>
+    <!-- 모달 창 -->
+    <div id="edit-modal" class="modal">
+        <div class="modal-content">
+            <span class="close">&times;</span>
+            <h2>게시물 UPDATE</h2>
+            <form action="/update/{{ post.id }}" method="post">
+                <label for="title">새 제목:</label><br>
+                <input type="text" id="title" name="title" value="{{ post.title }}" required><br>
+                <label for="content">새 내용:</label><br>
+                <textarea id="content" name="content" rows="4" cols="50" required>{{ post.content }}</textarea><br>
+                <input type="submit" value="UPDATE" class="update-btn"> 
+            </form>
+        </div>
     </div>
-</div>
     <!-- JavaScript -->
     <script>
         // 게시물 UPDATE 버튼 요소 가져오기
